@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom';
 
 import user_frame from '../assets/svgs/user-frame.svg';
@@ -11,6 +11,7 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 
 
 
@@ -27,6 +28,18 @@ function TableHead({ handleRefetch }) {
         role: ''
     });
 
+    const alert = useAlert();
+
+
+    useEffect(function() {
+        if(!showModal) {
+            form.name = ''
+            form.email = ''
+            form.password = ''
+            form.role = ''
+        }
+    }, [showModal]);
+
 
     // SHOW ADD NEW USER MODAL
     function handleAddUser() {
@@ -36,7 +49,10 @@ function TableHead({ handleRefetch }) {
     // HANDLE SUBMIT NEW USER
     async function handleSubmitUser (e) {
         e.preventDefault();
-        if(!form.name || !form.email || !form.password || !form.role) throw new Error('Fill up all field')
+        if(!form.name || !form.email || !form.password || !form.role) {
+            alert.error('Fill up all field');
+            return;
+        }
         setIsLoading(true);
         try {
             const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}`, {
@@ -45,11 +61,11 @@ function TableHead({ handleRefetch }) {
                 role: form.role, 
                 password: form.password, 
             });
-            // console.log(res);
+            alert.success("Successful");
             setShowModal(false);
             handleRefetch(true)
         } catch(err) {
-            setError(err.message);
+            alert.error(err.message);
         } finally {
             setIsLoading(false)
         }

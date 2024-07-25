@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+html { scroll-behavior: smooth; }
 input:focus, select:focus {
     outline: none;
     border-color: #0D6EFD;

@@ -7,6 +7,7 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
+import { useAlert } from 'react-alert';
 
 
 
@@ -24,6 +25,7 @@ function TableActions({ selected, handleRefetch }) {
         id: selected?.id || null
     });
 
+    const alert = useAlert()
 
     // FUNCTIONS TO TOGGLE/HANDLE BOTH THE DELETE AND THE EDIT MODAL
     function handleOpenDeleteModal() {
@@ -39,22 +41,24 @@ function TableActions({ selected, handleRefetch }) {
         setShowModal({ ...showModal, edit: false });
     }
 
+    console.log(`${import.meta.env.VITE_SERVER_URL}${form?.id}`)
 
     // HANDLE EDIT USER
-    async function handleEditUser() {
+    async function handleEditUser(e) {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios.patch(`${import.meta.env.VITE_SERVER_URL}:${form?.id}`, {
+            const res = await axios.patch(`${import.meta.env.VITE_SERVER_URL}${form?.id}`, {
                 email: form.email, 
                 name: form.name, 
                 role: form.role, 
                 password: form.password, 
             });
+            alert.success('Editted Successfully!');
             handleRefetch(true)
             handleCloseEditModal()
         } catch(err) {
-            console.log(err)
+            alert.error(err.message);
         } finally {
             setIsLoading(false)
         }
@@ -63,12 +67,12 @@ function TableActions({ selected, handleRefetch }) {
     // HANDLE DELETE USER
     async function handleDeleteUser() {
         try {
-            console.log(form.id)
-            await axios.patch(`${import.meta.env.VITE_SERVER_URL}:${form?.id}`);
+            await axios.delete(`${import.meta.env.VITE_SERVER_URL}${form?.id}`);
+            alert.success('Deleted Successfully!');
             handleRefetch(true)
             handleCloseDeleteModal()
         } catch(err) {
-            console.log(err)
+            alert.error(err.message);
         }
     }
 

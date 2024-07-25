@@ -37,7 +37,7 @@ function TableUi({ data, handleRefetch }) {
         {
             name: 'Role',
             selector: row => (
-                <span className={``}>{row?.role}</span>
+                <span className={`${row?.role === 'Adminsitrator' ? 'bg-primary-50 text-primary-600' : row?.role === "Sales Manager" ? 'bg-bg-green text-color-green' : "Sales Representative" ? 'bg-bg-orange text-color-orange' : ''} p-1 pl-[8px] pr-[8px] text-[12px] rounded-[50px]`}>{row?.role}</span>
             ),
             sortable: true,
         },

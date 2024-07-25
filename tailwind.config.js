@@ -17,8 +17,16 @@ export default {
         "neutral-400": "#94A3B8",
 
         "dark-gray": "#555",
+
         "bg-red": "#FBEAE9",
-        "color-red": "#EB9B98"
+        "color-red": "#EB9B98",
+
+        "bg-orange": "#FEF4E6",
+        "color-orange": "#F58A07",
+        
+        "bg-green": "#E7F6EC",
+        "color-green": "#0F973D",
+        
       },
 
     },
