@@ -15,6 +15,7 @@ import axios from 'axios';
 function TableHead() {
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const [form, setForm] = useState({
         email: '',
@@ -29,6 +30,7 @@ function TableHead() {
 
     async function handleSubmitUser (e) {
         e.preventDefault();
+        if(!form.name || !form.email || !form.password || !form.role) throw new Error('Fill up all field')
         setIsLoading(true);
         try {
             const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}`, {
@@ -39,7 +41,7 @@ function TableHead() {
             });
             setShowModal(false)
         } catch(err) {
-            console.log(err)
+            setError(err.message);
         } finally {
             setIsLoading(false)
         }

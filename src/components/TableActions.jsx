@@ -10,12 +10,10 @@ import axios from 'axios';
 import { createPortal } from 'react-dom';
 
 function TableActions({ selected }) {
-    const [showModal, setShowModal] = useState({
-        edit: false,
-        delete: false
-    });
-
     const [isLoading, setIsLoading] = useState(false);
+    const [showModal, setShowModal] = useState({
+        edit: false, delete: false
+    });
 
     const [form, setForm] = useState({
         email: selected?.email || '',
@@ -56,11 +54,16 @@ function TableActions({ selected }) {
         }
     }
 
-    function handleDeleteUser() {
-        
+    async function handleDeleteUser() {
+        try {
+            console.log(form.id)
+            await axios.patch(`${import.meta.env.VITE_SERVER_URL}:${form?.id}`);
+            setShowModal(false);
+        } catch(err) {
+            console.log(err)
+        }
     }
 
-   
 
   return (
     <>
@@ -106,7 +109,7 @@ function TableActions({ selected }) {
             showModal.delete && (
                 <>
                     <Overloay handleClose={handleCloseDeleteModal} />
-                    <Modal>
+                    <Modal handleClose={handleCloseDeleteModal}>
                         <div className="flex flex-col gap-2 items-center mb-[40px]">
                             <p className='text-[24px] font-semibold'>Delete this user</p>
                             <p className='text-[13px] text-center text-dark-gray'>This user and all associated data will be permanently removed. Do you wish to continue</p>
