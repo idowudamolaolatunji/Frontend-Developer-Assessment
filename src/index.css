@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #0D6EFD;
+}
