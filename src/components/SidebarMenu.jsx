@@ -12,7 +12,7 @@ import backups from '../assets/svgs/Cloud.svg';
 
 function SidebarMenu() {
   return (
-    <div className='bg-white min-w-[240px] p-[16px] rounded-md border-1 border-secondary-50'>
+    <div className='bg-white min-w-[240px] p-[16px] rounded-md border-1 hidden md:block border-secondary-50'>
         <p className="text-sm mb-5 font-semibold">Settings</p>
 
         <div className="flex flex-col gap-1 pb-4 border-b-2 border-gray">

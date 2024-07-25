@@ -11,7 +11,6 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
-import { useAlert } from 'react-alert';
 
 
 
@@ -27,8 +26,6 @@ function TableHead({ handleRefetch }) {
         password: '',
         role: ''
     });
-
-    const alert = useAlert();
 
 
     useEffect(function() {
@@ -50,7 +47,6 @@ function TableHead({ handleRefetch }) {
     async function handleSubmitUser (e) {
         e.preventDefault();
         if(!form.name || !form.email || !form.password || !form.role) {
-            alert.error('Fill up all field');
             return;
         }
         setIsLoading(true);
@@ -61,7 +57,6 @@ function TableHead({ handleRefetch }) {
                 role: form.role, 
                 password: form.password, 
             });
-            alert.success("Successful");
             setShowModal(false);
             handleRefetch(true)
         } catch(err) {
@@ -74,7 +69,7 @@ function TableHead({ handleRefetch }) {
     return (
         <>
             <div className="bg-white flex items-center p-[14px] gap-[20px]">
-                <div className="bg-transparent w-[250px] rounded-md border-[1.4px] border-gray pl-2 pr-2 pt-1 pb-1 flex items-center gap-2 ">
+                <div className="bg-transparent w-[100px] md:w-[250px] rounded-md border-[1.4px] border-gray pl-2 pr-2 pt-1 pb-1 flex items-center gap-2 ">
                     <img src={search} className='w-[16px]' />
                     <input type="text" className='bg-transparent w-[100%] placeholder:text-sm p-0' placeholder='Search here...' />
                 </div>

@@ -12,18 +12,18 @@ import NavItem from './NavItem';
 
 function Header() {
   return (
-    <header className='flex flex-row items-center justify-between h-[80px] pl-10 pr-10'>
+    <header className='flex md:flex-row items-center justify-between h-[80px] pl-5 pr-5 md:pl-10 md:pr-10'>
         <div className="flex flex-row gap-[20px] items-center">
             <img src={logo_img} alt="" className='w-[42px]' />
 
-            <div className="bg-gray w-[420px] pl-3 pr-3 pt-1.5 pb-1.5 rounded-sm flex items-center gap-2">
+            <div className="bg-gray w-[100%] md:w-[280px] lg:w-[420px] pl-3 pr-3 pt-1.5 pb-1.5 rounded-sm flex items-center gap-2">
                 <img src={search} className='w-[16px]' />
                 <input type="text" className='bg-transparent w-[100%] placeholder:text-sm p-0' placeholder='Search here...' />
             </div>
         </div>
 
 
-        <div className="flex items-center gap-6">
+        <div className="items-center gap-6 hidden md:flex">
             <NavItem text="Notifications" icon={bell} />
             <NavItem text="Wallet" icon={wallet} />
             <NavItem text="Inquires" icon={inquiry} />
