@@ -26,13 +26,11 @@ function TableUi({ data, handleRefetch }) {
             name: 'Name',
             selector: row => row?.name,
             sortable: true,
-            width: '250px'
         },
         {
             name: 'Email Address',
             selector: row => row?.email,
             sortable: true,
-            width: '350px'
         },
         {
             name: 'Role',
