@@ -7,6 +7,7 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
+import AlertUi from './Alert';
 
 
 
@@ -14,6 +15,9 @@ function TableActions({ selected, handleRefetch }) {
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState({
         edit: false, delete: false
+    });
+    const [showAlert, setShowAlert] = useState({
+        type: '', message: ''
     });
 
     const [form, setForm] = useState({
@@ -45,16 +49,17 @@ function TableActions({ selected, handleRefetch }) {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const res = await axios.patch(`${import.meta.env.VITE_SERVER_URL}${form?.id}`, {
+            await axios.patch(`${import.meta.env.VITE_SERVER_URL}${form?.id}`, {
                 email: form.email, 
                 name: form.name, 
                 role: form.role, 
                 password: form.password, 
             });
+            setShowAlert({ type: 'success', message: 'Editted Successfully!' })
             handleRefetch(true)
             handleCloseEditModal()
         } catch(err) {
-            alert.error(err.message);
+            setShowAlert({ type: 'success', message: err.message });
         } finally {
             setIsLoading(false)
         }
@@ -65,9 +70,10 @@ function TableActions({ selected, handleRefetch }) {
         try {
             await axios.delete(`${import.meta.env.VITE_SERVER_URL}${form?.id}`);
             handleRefetch(true)
+            setShowAlert({ type: 'success', message: 'Deleted Successfully!' })
             handleCloseDeleteModal()
         } catch(err) {
-            alert.error(err.message);
+            setShowAlert({ type: 'error', message: err.message })
         }
     }
 
@@ -108,7 +114,6 @@ function TableActions({ selected, handleRefetch }) {
                         </form>
 
                     </Modal>
-
                 </>
             ), document.body
         )}
@@ -134,6 +139,11 @@ function TableActions({ selected, handleRefetch }) {
                     </Modal>
                 </>
             ), document.body
+        )}
+
+
+        {(showAlert.message || showAlert.type) && (
+            <AlertUi type={showAlert.type} message={showAlert.message} />
         )}
     </>
   )

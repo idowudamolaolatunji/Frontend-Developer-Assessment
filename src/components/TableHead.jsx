@@ -21,7 +21,6 @@ function TableHead({ handleRefetch }) {
     const [showAlert, setShowAlert] = useState({
         type: '', message: ''
     });
-    const [error, setError] = useState(false);
 
     const [form, setForm] = useState({
         email: '',
@@ -62,7 +61,7 @@ function TableHead({ handleRefetch }) {
                 password: form.password, 
             });
             setShowModal(false);
-            setShowAlert({ type: 'success', message: 'Craeted Successfully!' })
+            setShowAlert({ type: 'success', message: 'Created Successfully!' })
             handleRefetch(true)
         } catch(err) {
             setShowAlert({ type: 'error', message: err.message });
