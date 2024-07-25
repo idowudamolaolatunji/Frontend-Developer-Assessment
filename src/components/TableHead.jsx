@@ -11,12 +11,16 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
+import AlertUi from './Alert';
 
 
 
 function TableHead({ handleRefetch }) {
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [showAlert, setShowAlert] = useState({
+        type: '', message: ''
+    });
     const [error, setError] = useState(false);
 
     const [form, setForm] = useState({
@@ -46,6 +50,7 @@ function TableHead({ handleRefetch }) {
     async function handleSubmitUser (e) {
         e.preventDefault();
         if(!form.name || !form.email || !form.password || !form.role) {
+            setShowAlert({ type: 'error', message: 'Fill up all fields' })
             return;
         }
         setIsLoading(true);
@@ -57,9 +62,10 @@ function TableHead({ handleRefetch }) {
                 password: form.password, 
             });
             setShowModal(false);
+            setShowAlert({ type: 'success', message: 'Craeted Successfully!' })
             handleRefetch(true)
         } catch(err) {
-            alert.error(err.message);
+            setShowAlert({ type: 'error', message: err.message });
         } finally {
             setIsLoading(false)
         }
@@ -115,6 +121,9 @@ function TableHead({ handleRefetch }) {
                 ), document.body
             )}
 
+            {(showAlert.message || showAlert.type) && (
+                <AlertUi type={showAlert.type} message={showAlert.message} />
+            )}
         </>
     )
 }

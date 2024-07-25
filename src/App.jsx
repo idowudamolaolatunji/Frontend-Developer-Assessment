@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import Header from './components/Header'
 import ContentContainer from './components/ContentContainer'
-import { Alert } from '@mui/material'
+import AlertUi from './components/Alert'
 
 
 function App() {
 
   return (
     <>
-    
       <Header />
       <ContentContainer />
-
-      <Alert severity='error'>Hello</Alert>
     </>
-
   )
 }
 

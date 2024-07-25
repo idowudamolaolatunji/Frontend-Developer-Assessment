@@ -74,6 +74,8 @@ function TableActions({ selected, handleRefetch }) {
 
   return (
     <>
+    
+
         <div className='flex items-center gap-[10px]'>
             <button onClick={handleOpenEditModal} 
                 className='text-[13px] text-primary-600'>Edit</button>
