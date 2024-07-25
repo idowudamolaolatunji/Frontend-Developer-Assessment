@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { createPortal } from 'react-dom';
 import user_frame from '../assets/svgs/user-frame.svg';
 import bin from '../assets/svgs/bin.svg';
 import Overloay from './Overloay';
@@ -7,9 +7,10 @@ import Modal from './Modal';
 import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
-import { createPortal } from 'react-dom';
 
-function TableActions({ selected }) {
+
+
+function TableActions({ selected, handleRefetch }) {
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState({
         edit: false, delete: false
@@ -23,6 +24,8 @@ function TableActions({ selected }) {
         id: selected?.id || null
     });
 
+
+    // FUNCTIONS TO TOGGLE/HANDLE BOTH THE DELETE AND THE EDIT MODAL
     function handleOpenDeleteModal() {
         setShowModal({ ...showModal, delete: true });
     }
@@ -36,6 +39,8 @@ function TableActions({ selected }) {
         setShowModal({ ...showModal, edit: false });
     }
 
+
+    // HANDLE EDIT USER
     async function handleEditUser() {
         e.preventDefault();
         setIsLoading(true);
@@ -46,7 +51,8 @@ function TableActions({ selected }) {
                 role: form.role, 
                 password: form.password, 
             });
-            setShowModal(false)
+            handleRefetch(true)
+            handleCloseEditModal()
         } catch(err) {
             console.log(err)
         } finally {
@@ -54,11 +60,13 @@ function TableActions({ selected }) {
         }
     }
 
+    // HANDLE DELETE USER
     async function handleDeleteUser() {
         try {
             console.log(form.id)
             await axios.patch(`${import.meta.env.VITE_SERVER_URL}:${form?.id}`);
-            setShowModal(false);
+            handleRefetch(true)
+            handleCloseDeleteModal()
         } catch(err) {
             console.log(err)
         }

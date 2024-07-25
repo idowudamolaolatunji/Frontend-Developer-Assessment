@@ -17,7 +17,7 @@ const customStyles = {
 }
 
 
-function TableUi({ data }) {
+function TableUi({ data, handleRefetch }) {
     const SortIcon = () => <img src={arrows} className='w-[18px] h-[18px]' />
 
 
@@ -43,12 +43,7 @@ function TableUi({ data }) {
         },
         {
             name: 'Actions',
-            selector: (row) => (
-                <>
-                    <TableActions selected={row} />
-                    {console.log(row)}
-                </>
-            )
+            selector: (row) => <TableActions selected={row} handleRefetch={handleRefetch} />
         },
     ]
 

@@ -12,7 +12,10 @@ import FormInput from './FormInput';
 import CustomBtn from './CustomBtn';
 import axios from 'axios';
 
-function TableHead() {
+
+
+
+function TableHead({ handleRefetch }) {
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -22,12 +25,15 @@ function TableHead() {
         name: '',
         password: '',
         role: ''
-      });
+    });
 
+
+    // SHOW ADD NEW USER MODAL
     function handleAddUser() {
         setShowModal(true)
     }
 
+    // HANDLE SUBMIT NEW USER
     async function handleSubmitUser (e) {
         e.preventDefault();
         if(!form.name || !form.email || !form.password || !form.role) throw new Error('Fill up all field')
@@ -39,7 +45,9 @@ function TableHead() {
                 role: form.role, 
                 password: form.password, 
             });
-            setShowModal(false)
+            // console.log(res);
+            setShowModal(false);
+            handleRefetch(true)
         } catch(err) {
             setError(err.message);
         } finally {
@@ -67,6 +75,7 @@ function TableHead() {
             </div>
 
 
+            {/* MODAL TO ADD NEW USER */}
             {createPortal(
                 showModal && (
                     <>
